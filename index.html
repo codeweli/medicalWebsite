@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareSync | Patient Health Information Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-icon">+</div>
+          <div>
+            <p class="eyebrow">Healthcare CRM</p>
+            <h1>CareSync</h1>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="nav-item active" href="#">
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-item" href="#">
+            <span>Patients</span>
+          </a>
+          <a class="nav-item" href="#">
+            <span>Appointments</span>
+          </a>
+          <a class="nav-item" href="#">
+            <span>Reports</span>
+          </a>
+          <a class="nav-item" href="#">
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-card">
+          <p class="muted-label">Need attention</p>
+          <h3>7 follow-ups</h3>
+          <p>Review pending patient updates and lab results.</p>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow primary">Good morning</p>
+            <h2>Clinical overview</h2>
+          </div>
+          <div class="topbar-actions">
+            <div class="search-box">
+              <span class="icon">⌕</span>
+              <input id="globalSearch" type="search" placeholder="Search patient, ID or status" />
+            </div>
+            <button class="primary-btn" id="newPatientBtn">+ New patient</button>
+          </div>
+        </header>
+
+        <section class="stats-grid">
+          <article class="stat-card accent-blue">
+            <div class="stat-icon">👥</div>
+            <div>
+              <span>Total patients</span>
+              <strong id="totalPatients">0</strong>
+            </div>
+          </article>
+          <article class="stat-card accent-green">
+            <div class="stat-icon">✅</div>
+            <div>
+              <span>Records complete</span>
+              <strong id="completeRecords">0</strong>
+            </div>
+          </article>
+          <article class="stat-card accent-purple">
+            <div class="stat-icon">🗓️</div>
+            <div>
+              <span>Appointments</span>
+              <strong id="appointmentCount">0</strong>
+            </div>
+          </article>
+          <article class="stat-card accent-orange">
+            <div class="stat-icon">⚠️</div>
+            <div>
+              <span>Alerts</span>
+              <strong id="alertCount">0</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel records-panel">
+            <div class="panel-heading">
+              <h3>Patient records</h3>
+              <div class="toolbar">
+                <select id="statusFilter" aria-label="Filter by patient status">
+                  <option value="all">All statuses</option>
+                  <option value="Stable">Stable</option>
+                  <option value="Critical">Critical</option>
+                  <option value="Monitoring">Monitoring</option>
+                  <option value="Recovered">Recovered</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Age</th>
+                    <th>Condition</th>
+                    <th>Last visit</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="patientTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <aside class="panel detail-panel">
+            <div class="panel-heading">
+              <h3>Patient profile</h3>
+              <button class="secondary-btn" type="button" id="resetFormBtn">Reset</button>
+            </div>
+
+            <form id="patientForm" class="patient-form">
+              <input type="hidden" id="patientId" name="patientId" />
+
+              <div class="form-grid two-col">
+                <label>
+                  Full name
+                  <input type="text" name="fullName" placeholder="e.g. Emma Carter" required />
+                </label>
+                <label>
+                  Medical ID
+                  <input type="text" name="patientIdCode" placeholder="e.g. PT-1048" required />
+                </label>
+              </div>
+
+              <div class="form-grid three-col">
+                <label>
+                  Age
+                  <input type="number" name="age" min="0" required />
+                </label>
+                <label>
+                  Gender
+                  <select name="gender">
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+                <label>
+                  Blood type
+                  <input type="text" name="bloodType" placeholder="A+" />
+                </label>
+              </div>
+
+              <div class="form-grid two-col">
+                <label>
+                  Phone
+                  <input type="tel" name="phone" placeholder="(555) 245-1786" />
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="email" placeholder="patient@email.com" />
+                </label>
+              </div>
+
+              <div class="form-grid two-col">
+                <label>
+                  Insurance provider
+                  <input type="text" name="insurance" placeholder="BlueCross Health" />
+                </label>
+                <label>
+                  Last visit
+                  <input type="date" name="lastVisit" />
+                </label>
+              </div>
+
+              <div class="form-grid two-col">
+                <label>
+                  Condition
+                  <input type="text" name="condition" placeholder="Hypertension" />
+                </label>
+                <label>
+                  Risk level
+                  <select name="riskLevel">
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Allergies
+                <input type="text" name="allergies" placeholder="Penicillin, shellfish" />
+              </label>
+
+              <label>
+                Current medications
+                <textarea name="medications" rows="2" placeholder="Lisinopril 10mg, Metformin 500mg"></textarea>
+              </label>
+
+              <label>
+                Medical history
+                <textarea name="medicalHistory" rows="3" placeholder="Recent diagnosis, treatments, procedures, and healthcare notes..."></textarea>
+              </label>
+
+              <div class="form-grid two-col">
+                <label>
+                  Care plan
+                  <input type="text" name="carePlan" placeholder="Follow-up care" />
+                </label>
+                <label>
+                  Status
+                  <select name="status">
+                    <option value="Stable">Stable</option>
+                    <option value="Monitoring">Monitoring</option>
+                    <option value="Critical">Critical</option>
+                    <option value="Recovered">Recovered</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="primary-btn">Save record</button>
+                <button type="button" class="ghost-btn" id="deletePatientBtn">Delete</button>
+              </div>
+            </form>
+          </aside>
+        </section>
+
+        <section class="bottom-grid">
+          <div class="panel">
+            <div class="panel-heading">
+              <h3>Upcoming appointments</h3>
+            </div>
+            <ul id="appointmentList" class="alert-list"></ul>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h3>Care alerts</h3>
+            </div>
+            <ul id="alertList" class="alert-list"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
